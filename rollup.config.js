@@ -1,29 +1,30 @@
-import path from 'path';
 import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 import commonjs from '@rollup/plugin-commonjs';
-import url from '@rollup/plugin-url';
 import svelte from 'rollup-plugin-svelte';
 import babel from '@rollup/plugin-babel';
 import { terser } from 'rollup-plugin-terser';
-import sveltePreprocess from 'svelte-preprocess';
-import typescript from '@rollup/plugin-typescript';
 import config from 'sapper/config/rollup.js';
 import pkg from './package.json';
+import sveltePreprocess from 'svelte-preprocess';
+import typescript from '@rollup/plugin-typescript';
 
 const mode = process.env.NODE_ENV;
 const dev = mode === 'development';
 const legacy = !!process.env.SAPPER_LEGACY_BUILD;
 
+const preprocess = sveltePreprocess({
+	postcss: true,
+});
+
 const onwarn = (warning, onwarn) =>
 	(warning.code === 'MISSING_EXPORT' && /'preload'/.test(warning.message)) ||
 	(warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message)) ||
-	(warning.code === 'THIS_IS_UNDEFINED') ||
 	onwarn(warning);
 
 export default {
 	client: {
-		input: config.client.input().replace(/\.js$/, '.ts'),
+		input: config.client.input(),
 		output: config.client.output(),
 		plugins: [
 			replace({
@@ -33,19 +34,18 @@ export default {
 			svelte({
 				dev,
 				hydratable: true,
-				preprocess: sveltePreprocess(),
-				emitCss: true
-			}),
-			url({
-				sourceDir: path.resolve(__dirname, 'src/node_modules/images'),
-				publicPath: '/client/'
+				emitCss: true,
+				preprocess: [preprocess],
 			}),
 			resolve({
 				browser: true,
 				dedupe: ['svelte']
 			}),
 			commonjs(),
-			typescript({ sourceMap: dev }),
+			typescript({
+				sourceMap: dev,
+				inlineSources: dev
+			}),
 
 			legacy && babel({
 				extensions: ['.js', '.mjs', '.html', '.svelte'],
@@ -74,7 +74,7 @@ export default {
 	},
 
 	server: {
-		input: { server: config.server.input().server.replace(/\.js$/, ".ts") },
+		input: config.server.input(),
 		output: config.server.output(),
 		plugins: [
 			replace({
@@ -84,19 +84,17 @@ export default {
 			svelte({
 				generate: 'ssr',
 				hydratable: true,
-				preprocess: sveltePreprocess(),
-				dev
-			}),
-			url({
-				sourceDir: path.resolve(__dirname, 'src/node_modules/images'),
-				publicPath: '/client/',
-				emitFiles: false // already emitted by client build
+				dev,
+				preprocess: [preprocess],
 			}),
 			resolve({
 				dedupe: ['svelte']
 			}),
 			commonjs(),
-			typescript({ sourceMap: dev })
+			typescript({
+				sourceMap: dev,
+				inlineSources: dev
+			}),
 		],
 		external: Object.keys(pkg.dependencies).concat(require('module').builtinModules),
 
@@ -105,7 +103,7 @@ export default {
 	},
 
 	serviceworker: {
-		input: config.serviceworker.input().replace(/\.js$/, '.ts'),
+		input: config.serviceworker.input(),
 		output: config.serviceworker.output(),
 		plugins: [
 			resolve(),
@@ -114,7 +112,6 @@ export default {
 				'process.env.NODE_ENV': JSON.stringify(mode)
 			}),
 			commonjs(),
-			typescript({ sourceMap: dev }),
 			!dev && terser()
 		],
 

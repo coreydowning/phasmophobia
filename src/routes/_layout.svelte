@@ -1,22 +1,21 @@
 <script lang="ts">
-	import Nav from '../components/Nav.svelte';
+	import GlobalStyle from "../components/GlobalStyle.svelte";
+	import { onMount } from "svelte";
+	import dark from "smelte/src/dark";
 
-	export let segment: string;
+	const darkMode = dark();
+
+	onMount(async () => {
+		import("@magica11y/prefers-color-scheme").then((prefersColorScheme) => {
+			const preferredColorScheme = prefersColorScheme.default.default();
+			darkMode.set(
+				preferredColorScheme !== prefersColorScheme.colorSchemes.LIGHT
+			);
+		});
+	});
 </script>
 
-<style>
-	main {
-		position: relative;
-		max-width: 56em;
-		background-color: white;
-		padding: 2em;
-		margin: 0 auto;
-		box-sizing: border-box;
-	}
-</style>
-
-<Nav {segment}/>
-
 <main>
-	<slot></slot>
+	<GlobalStyle />
+	<slot />
 </main>
