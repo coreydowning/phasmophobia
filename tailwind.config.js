@@ -3,8 +3,8 @@ const { addUtility } = require("smelte/src/utils/style.js")
 const buildPalette = require("smelte/src/utils/color.js")
 
 const colors = {
-  primary: "#9fa8da",
-  secondary: "#009688",
+  primary: "#3f51b5",
+  secondary: "#ffc107",
   error: "#f44336",
   success: "#4caf50",
   alert: "#ff9800",
@@ -76,11 +76,10 @@ module.exports = {
       sm: "0.875rem",
       xs: "0.75rem"
     },
-    breakpoints: {
-      sm: { max: "639px" },
-      md: { max: "767px" },
-      lg: { max: "1023px" },
-      xl: { max: "1279px" }
+    screens: {
+      sm: { max: "999px" },
+      md: { min: "1000px" },
+      lg: { min: "1501px" }
     },
     lineHeight: {
       none: 1,

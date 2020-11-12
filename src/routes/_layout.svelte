@@ -15,6 +15,9 @@
 	});
 </script>
 
+<style lang="postcss">
+</style>
+
 <main>
 	<GlobalStyle />
 	<slot />
