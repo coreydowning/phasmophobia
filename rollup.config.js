@@ -1,26 +1,38 @@
-import resolve from '@rollup/plugin-node-resolve';
-import replace from '@rollup/plugin-replace';
-import commonjs from '@rollup/plugin-commonjs';
-import svelte from 'rollup-plugin-svelte';
-import babel from '@rollup/plugin-babel';
-import { terser } from 'rollup-plugin-terser';
-import config from 'sapper/config/rollup.js';
-import pkg from './package.json';
-import sveltePreprocess from 'svelte-preprocess';
-import typescript from '@rollup/plugin-typescript';
+import path from 'path'
+import replace from '@rollup/plugin-replace'
+import commonjs from '@rollup/plugin-commonjs'
+import resolve from '@rollup/plugin-node-resolve'
+import svelte from 'rollup-plugin-svelte'
+import babel from '@rollup/plugin-babel'
+import postcss from 'rollup-plugin-postcss'
+import { terser } from 'rollup-plugin-terser'
+import sveltePreprocess from 'svelte-preprocess'
+import config from 'sapper/config/rollup.js'
+import pkg from './package.json'
+import typescript from '@rollup/plugin-typescript'
 
-const mode = process.env.NODE_ENV;
-const dev = mode === 'development';
-const legacy = !!process.env.SAPPER_LEGACY_BUILD;
-
-const preprocess = sveltePreprocess({
-	postcss: true,
-});
+const mode = process.env.NODE_ENV
+const dev = mode === 'development'
+const legacy = !!process.env.SAPPER_LEGACY_BUILD
 
 const onwarn = (warning, onwarn) =>
 	(warning.code === 'MISSING_EXPORT' && /'preload'/.test(warning.message)) ||
 	(warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message)) ||
-	onwarn(warning);
+	onwarn(warning)
+
+const postcssOptions = () => ({
+	extensions: ['.scss', '.sass'],
+	extract: false,
+	minimize: true,
+	use: [
+		['sass', {
+			includePaths: [
+				path.join(__dirname, 'src', 'theme'),
+				path.join(__dirname, 'node_modules'),
+			]
+		}]
+	]
+})
 
 export default {
 	client: {
@@ -34,14 +46,16 @@ export default {
 			svelte({
 				dev,
 				hydratable: true,
-				emitCss: true,
-				preprocess: [preprocess],
+				preprocess: sveltePreprocess(),
+				emitCss: false,
+				css: true,
 			}),
 			resolve({
 				browser: true,
 				dedupe: ['svelte']
 			}),
 			commonjs(),
+			postcss(postcssOptions()),
 			typescript({
 				sourceMap: dev,
 				inlineSources: dev
@@ -84,13 +98,14 @@ export default {
 			svelte({
 				generate: 'ssr',
 				hydratable: true,
+				preprocess: sveltePreprocess(),
 				dev,
-				preprocess: [preprocess],
 			}),
 			resolve({
 				dedupe: ['svelte']
 			}),
 			commonjs(),
+			postcss(postcssOptions()),
 			typescript({
 				sourceMap: dev,
 				inlineSources: dev
@@ -118,4 +133,4 @@ export default {
 		preserveEntrySignatures: false,
 		onwarn,
 	}
-};
+}

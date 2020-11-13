@@ -8,8 +8,8 @@ const ghosts: GhostType[] = [
         strength: "",
         weakness: "",
         evidence: [
-            Evidence.Fingerprints,
             Evidence.SpiritBox,
+            Evidence.Fingerprints,
             Evidence.GhostWriting,
         ],
     },
@@ -19,8 +19,8 @@ const ghosts: GhostType[] = [
         strength: "",
         weakness: "",
         evidence: [
-            Evidence.Fingerprints,
             Evidence.SpiritBox,
+            Evidence.Fingerprints,
             Evidence.Freezing,
         ],
     },
@@ -29,7 +29,11 @@ const ghosts: GhostType[] = [
         description: "",
         strength: "",
         weakness: "",
-        evidence: [Evidence.GhostOrbs, Evidence.EMF5, Evidence.Freezing],
+        evidence: [
+            Evidence.Freezing,
+            Evidence.EMF5,
+            Evidence.GhostOrbs,
+        ],
     },
     {
         name: "Poltergeist",
@@ -37,8 +41,8 @@ const ghosts: GhostType[] = [
         strength: "",
         weakness: "",
         evidence: [
-            Evidence.Fingerprints,
             Evidence.SpiritBox,
+            Evidence.Fingerprints,
             Evidence.GhostOrbs,
         ],
     },
@@ -47,14 +51,22 @@ const ghosts: GhostType[] = [
         description: "",
         strength: "",
         weakness: "",
-        evidence: [Evidence.Fingerprints, Evidence.EMF5, Evidence.Freezing],
+        evidence: [
+            Evidence.Fingerprints,
+            Evidence.EMF5,
+            Evidence.Freezing,
+        ],
     },
     {
         name: "Jinn",
         description: "",
         strength: "",
         weakness: "",
-        evidence: [Evidence.EMF5, Evidence.SpiritBox, Evidence.GhostOrbs],
+        evidence: [
+            Evidence.EMF5,
+            Evidence.SpiritBox,
+            Evidence.GhostOrbs,
+        ],
     },
     {
         name: "Mare",
@@ -74,8 +86,8 @@ const ghosts: GhostType[] = [
         weakness: "",
         evidence: [
             Evidence.Fingerprints,
-            Evidence.SpiritBox,
-            Evidence.Freezing,
+            Evidence.GhostWriting,
+            Evidence.EMF5,
         ],
     },
     {
@@ -91,12 +103,12 @@ const ghosts: GhostType[] = [
     },
     {
         name: "Demon",
-        description: "spooky",
+        description: "",
         strength: "",
         weakness: "",
         evidence: [
-            Evidence.GhostWriting,
             Evidence.SpiritBox,
+            Evidence.GhostWriting,
             Evidence.Freezing,
         ],
     },
@@ -117,8 +129,8 @@ const ghosts: GhostType[] = [
         strength: "",
         weakness: "",
         evidence: [
-            Evidence.GhostWriting,
             Evidence.SpiritBox,
+            Evidence.GhostWriting,
             Evidence.EMF5,
         ],
     },

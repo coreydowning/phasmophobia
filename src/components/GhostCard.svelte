@@ -1,11 +1,14 @@
 <script lang="ts">
-    import { Card, Chip } from "smelte";
+    import Chip, { Set, Text, Checkmark } from "@smui/chips";
+    import Card, { Content, Actions } from "@smui/card";
+    import { createEventDispatcher } from "svelte";
     import type Evidence from "../models/Evidence";
     import type GhostType from "../models/GhostType";
+    import typography from "../routes/typography.scss";
 
     export let ghost: GhostType;
-    export let confirmed: Evidence[];
-    export let eliminated: Evidence[];
+    export let confirmed: Evidence[] = [];
+    export let eliminated: Evidence[] = [];
     $: hasRejectedEvidence = ghost.evidence.some((evidence) =>
         eliminated.includes(evidence)
     );
@@ -15,37 +18,34 @@
     $: show = !hasRejectedEvidence && hasAllConfirmedEvidence;
 </script>
 
-<style lang="postcss">
-    div[slot="text"] {
-        padding: 1rem;
-    }
-
-    div[slot="actions"] {
-        padding: 1rem;
+<style>
+    h6 {
+        margin: 0;
     }
 </style>
 
 {#if show}
-    <Card.Card>
-        <div slot="title">
-            <Card.Title title={ghost.name} />
-        </div>
-        <div slot="text" class="card-body">
-            <p class="subtitle">Description</p>
-            <p class="body-2">{ghost.description}</p>
-            <p class="subtitle">Strength</p>
-            <p class="body-2">{ghost.strength}</p>
-            <p class="subtitle">Weakness</p>
-            <p class="body-2">{ghost.weakness}</p>
-        </div>
-        <div slot="actions">
-            {#each ghost.evidence as evidence}
-                <Chip
-                    selectable={false}
-                    selected={confirmed.includes(evidence)}>
-                    {evidence}
+    <Card padded="true">
+        <h6>{ghost.name}</h6>
+        <Content class="mdc-typography--body2">
+            <strong>Description</strong>
+            <p>{ghost.description}</p>
+            <strong>Strength</strong>
+            <p>{ghost.strength}</p>
+            <strong>Weakness</strong>
+            <p>{ghost.weakness}</p>
+        </Content>
+        <Actions>
+            <Set
+                chips={ghost.evidence}
+                let:chip
+                filter
+                bind:selected={confirmed}>
+                <Chip on:MDCChip:selection id={chip}>
+                    <Checkmark />
+                    <Text>{chip}</Text>
                 </Chip>
-            {/each}
-        </div>
-    </Card.Card>
+            </Set>
+        </Actions>
+    </Card>
 {/if}
