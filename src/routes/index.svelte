@@ -20,7 +20,7 @@
 	};
 </script>
 
-<style lang="postcss">
+<style lang="scss">
 	section {
 		padding: 0.5rem;
 	}
@@ -40,14 +40,19 @@
 		padding: 1.5rem;
 		grid-template-columns: 1fr;
 	}
-	@screen md {
+	@media (min-width: 1000px) {
 		main {
 			grid-template-columns: repeat(2, 1fr);
 		}
 	}
-	@screen lg {
+	@media (min-width: 1500px) {
 		main {
 			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+	@media (min-width: 2000px) {
+		main {
+			grid-template-columns: repeat(4, 1fr);
 		}
 	}
 </style>
