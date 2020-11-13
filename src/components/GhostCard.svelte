@@ -1,7 +1,6 @@
 <script lang="ts">
     import Chip, { Set, Text, Checkmark } from "@smui/chips";
     import Card, { Content, Actions } from "@smui/card";
-    import { createEventDispatcher } from "svelte";
     import type Evidence from "../models/Evidence";
     import type GhostType from "../models/GhostType";
     import typography from "../routes/typography.scss";

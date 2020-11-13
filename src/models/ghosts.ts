@@ -114,7 +114,7 @@ const ghosts: GhostType[] = [
     },
     {
         name: "Yurei",
-        description: "spooky",
+        description: "",
         strength: "",
         weakness: "",
         evidence: [
@@ -125,7 +125,7 @@ const ghosts: GhostType[] = [
     },
     {
         name: "Oni",
-        description: "spooky",
+        description: "",
         strength: "",
         weakness: "",
         evidence: [
