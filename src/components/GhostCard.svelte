@@ -27,11 +27,10 @@
     <Card padded="true">
         <h6>{ghost.name}</h6>
         <Content class="mdc-typography--body2">
-            <strong>Description</strong>
             <p>{ghost.description}</p>
-            <strong>Strength</strong>
+            <big>Strength</big>
             <p>{ghost.strength}</p>
-            <strong>Weakness</strong>
+            <big>Weakness</big>
             <p>{ghost.weakness}</p>
         </Content>
         <Actions>
