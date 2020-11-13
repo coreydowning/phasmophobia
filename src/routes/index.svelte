@@ -10,6 +10,7 @@
 
 	const handleSelection = (event) => {
 		const evidence = event.detail.chipId;
+		window.sa_event(`click_card_chip_${evidence}`);
 		if (confirmed.includes(evidence)) {
 			confirmed = confirmed.filter((val) => val !== evidence);
 		} else {
@@ -62,6 +63,7 @@
 			<Group>
 				<Button
 					on:click={() => {
+						window.sa_event(`click_button_confirm_${evidence}`);
 						if (confirmed.includes(evidence)) {
 							confirmed = confirmed.filter((val) => val !== evidence);
 						} else {
@@ -75,6 +77,7 @@
 				</Button>
 				<Button
 					on:click={() => {
+						window.sa_event(`click_button_eliminate_${evidence}`);
 						if (eliminated.includes(evidence)) {
 							eliminated = eliminated.filter((val) => val !== evidence);
 						} else {
@@ -104,6 +107,7 @@
 <div class="fab">
 	<Fab
 		on:click={() => {
+			window.sa_event(`click_fab_reset`);
 			confirmed = [];
 			eliminated = [];
 		}}>
