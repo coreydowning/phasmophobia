@@ -1,6 +1,6 @@
 <script lang="ts">
     import Button, { Label } from "@smui/button";
-    import Card, { Content, Actions } from "@smui/card";
+    import Card, { Content, Actions, ActionButtons } from "@smui/card";
     import type Evidence from "../models/Evidence";
     import type GhostType from "../models/GhostType";
     import typography from "../routes/typography.scss";
@@ -22,11 +22,8 @@
         margin: 0;
     }
 
-    @import "@material/button/mixins";
-    @import "@material/shape/variables";
-
-    .button-shaped-round {
-        @include mdc-button-shape-radius(999px);
+    .actions {
+        flex-wrap: wrap;
     }
 </style>
 
@@ -41,16 +38,17 @@
             <p>{ghost.weakness}</p>
         </Content>
         <Actions>
-            {#each ghost.evidence as evidence (evidence)}
-                <Button
-                    on:click={() => {
-                        toggleEvidence(evidence);
-                    }}
-                    disabled={confirmed.has(evidence)}
-                    class="button-shaped-round">
-                    <Label>{evidence}</Label>
-                </Button>
-            {/each}
+            <div class="actions">
+                {#each ghost.evidence as evidence (evidence)}
+                    <Button
+                        on:click={() => {
+                            toggleEvidence(evidence);
+                        }}
+                        disabled={confirmed.has(evidence)}>
+                        <Label>{evidence}</Label>
+                    </Button>
+                {/each}
+            </div>
         </Actions>
     </Card>
 {/if}
