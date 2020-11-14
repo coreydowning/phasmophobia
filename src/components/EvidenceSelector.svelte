@@ -2,12 +2,21 @@
     import Evidence from "../models/Evidence";
     import type EvidenceCollection from "../models/EvidenceCollection";
     import { createEventDispatcher } from "svelte";
+    import ghosts from "../models/ghosts";
     import Button, { Group, Label, Icon } from "@smui/button";
 
     const dispatch = createEventDispatcher();
 
     export let confirmed: EvidenceCollection;
     export let eliminated: EvidenceCollection;
+
+    const unique = (value, index, self) => {
+        return self.indexOf(value) === index;
+    };
+    $: availableEvidence = ghosts
+        .filter((ghost) => ghost.hasAllConfirmedEvidence(confirmed))
+        .flatMap((ghost) => ghost.evidence)
+        .filter(unique);
 </script>
 
 <style lang="scss">
@@ -25,6 +34,7 @@
                     dispatch('confirm', { evidence });
                 }}
                 color="primary"
+                disabled={!availableEvidence.includes(evidence)}
                 variant={confirmed.has(evidence) ? 'unelevated' : 'outlined'}>
                 <Label>{evidence}</Label>
             </Button>
@@ -33,7 +43,8 @@
                     dispatch('eliminate', { evidence });
                 }}
                 color="primary"
-                variant={eliminated.has(evidence) ? 'unelevated' : 'outlined'}>
+                disabled={!availableEvidence.includes(evidence)}
+                variant={eliminated.has(evidence) && availableEvidence.includes(evidence) ? 'unelevated' : 'outlined'}>
                 <Icon class="material-icons">highlight_off</Icon>
             </Button>
         </Group>

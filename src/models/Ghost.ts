@@ -19,11 +19,17 @@ export default class Ghost implements GhostType {
     }
 
     isEligible(confirmed: EvidenceCollection, eliminated: EvidenceCollection): boolean {
-        const hasRejectedEvidence = this.evidence.some((evidence) => {
+        return !this.hasRejectedEvidence(eliminated) && this.hasAllConfirmedEvidence(confirmed)
+    }
+
+    hasRejectedEvidence(eliminated: EvidenceCollection): boolean {
+        return this.evidence.some((evidence) => {
             return eliminated.has(evidence)
         })
-        const hasAllConfirmedEvidence = confirmed.isSubsetOf(this.evidence)
-        return !hasRejectedEvidence && hasAllConfirmedEvidence
+    }
+
+    hasAllConfirmedEvidence(confirmed: EvidenceCollection): boolean {
+        return confirmed.isSubsetOf(this.evidence)
     }
 
 
