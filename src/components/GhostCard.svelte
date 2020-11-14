@@ -1,25 +1,32 @@
 <script lang="ts">
-    import Chip, { Set, Text, Checkmark } from "@smui/chips";
+    import Button, { Label } from "@smui/button";
     import Card, { Content, Actions } from "@smui/card";
     import type Evidence from "../models/Evidence";
     import type GhostType from "../models/GhostType";
     import typography from "../routes/typography.scss";
+    import type EvidenceCollection from "../models/EvidenceCollection";
 
     export let ghost: GhostType;
-    export let confirmed: Evidence[] = [];
-    export let eliminated: Evidence[] = [];
+    export let confirmed: EvidenceCollection;
+    export let eliminated: EvidenceCollection;
+    export let toggleEvidence: (evidence: Evidence) => void = () => {};
     $: hasRejectedEvidence = ghost.evidence.some((evidence) =>
-        eliminated.includes(evidence)
+        eliminated.has(evidence)
     );
-    $: hasAllConfirmedEvidence = confirmed.every((evidence) =>
-        ghost.evidence.includes(evidence)
-    );
+    $: hasAllConfirmedEvidence = confirmed.isSubsetOf(ghost.evidence);
     $: show = !hasRejectedEvidence && hasAllConfirmedEvidence;
 </script>
 
-<style>
+<style lang="scss">
     h6 {
         margin: 0;
+    }
+
+    @import "@material/button/mixins";
+    @import "@material/shape/variables";
+
+    .button-shaped-round {
+        @include mdc-button-shape-radius(999px);
     }
 </style>
 
@@ -34,16 +41,16 @@
             <p>{ghost.weakness}</p>
         </Content>
         <Actions>
-            <Set
-                chips={ghost.evidence}
-                let:chip
-                filter
-                bind:selected={confirmed}>
-                <Chip on:MDCChip:selection id={chip}>
-                    <Checkmark />
-                    <Text>{chip}</Text>
-                </Chip>
-            </Set>
+            {#each ghost.evidence as evidence (evidence)}
+                <Button
+                    on:click={() => {
+                        toggleEvidence(evidence);
+                    }}
+                    disabled={confirmed.has(evidence)}
+                    class="button-shaped-round">
+                    <Label>{evidence}</Label>
+                </Button>
+            {/each}
         </Actions>
     </Card>
 {/if}
