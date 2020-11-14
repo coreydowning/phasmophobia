@@ -101,8 +101,8 @@
 	<Fab
 		on:click={() => {
 			window.sa_event(`click_fab_reset`);
-			confirmed.reset();
-			eliminated.reset();
+			confirmed = confirmed.reset();
+			eliminated = eliminated.reset();
 		}}>
 		<FabIcon class="material-icons">restore</FabIcon>
 	</Fab>
