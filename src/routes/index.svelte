@@ -17,9 +17,6 @@
 </script>
 
 <style lang="scss">
-	section {
-		padding: 0.5rem;
-	}
 	.button {
 		padding: 0.5rem;
 		display: inline-block;
@@ -33,8 +30,15 @@
 	main {
 		display: grid;
 		gap: 1.5rem;
-		padding: 1.5rem;
 		grid-template-columns: 1fr;
+	}
+	@media (min-width: 600px) {
+		section {
+			padding: 0.5rem;
+		}
+		main {
+			padding: 1.5rem;
+		}
 	}
 	@media (min-width: 1000px) {
 		main {
