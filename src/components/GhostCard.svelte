@@ -1,20 +1,16 @@
 <script lang="ts">
     import Button, { Label } from "@smui/button";
-    import Card, { Content, Actions, ActionButtons } from "@smui/card";
+    import Card, { Content, Actions } from "@smui/card";
     import type Evidence from "../models/Evidence";
-    import type GhostType from "../models/GhostType";
     import typography from "../routes/typography.scss";
     import type EvidenceCollection from "../models/EvidenceCollection";
+    import type Ghost from "../models/Ghost";
 
-    export let ghost: GhostType;
+    export let ghost: Ghost;
     export let confirmed: EvidenceCollection;
     export let eliminated: EvidenceCollection;
     export let toggleEvidence: (evidence: Evidence) => void = () => {};
-    $: hasRejectedEvidence = ghost.evidence.some((evidence) =>
-        eliminated.has(evidence)
-    );
-    $: hasAllConfirmedEvidence = confirmed.isSubsetOf(ghost.evidence);
-    $: show = !hasRejectedEvidence && hasAllConfirmedEvidence;
+    $: show = ghost.isEligible(confirmed, eliminated);
 </script>
 
 <style lang="scss">

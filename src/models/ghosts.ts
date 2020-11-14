@@ -1,8 +1,8 @@
 import Evidence from "./Evidence"
-import type GhostType from "./GhostType"
+import Ghost from "./Ghost"
 
-const ghosts: GhostType[] = [
-    {
+const ghosts: Ghost[] = [
+    new Ghost({
         name: "Spirit",
         description: "",
         strength: "",
@@ -12,8 +12,8 @@ const ghosts: GhostType[] = [
             Evidence.Fingerprints,
             Evidence.GhostWriting,
         ],
-    },
-    {
+    }),
+    new Ghost({
         name: "Wraith",
         description: "",
         strength: "",
@@ -23,8 +23,8 @@ const ghosts: GhostType[] = [
             Evidence.Fingerprints,
             Evidence.Freezing,
         ],
-    },
-    {
+    }),
+    new Ghost({
         name: "Phantom",
         description: "",
         strength: "",
@@ -34,8 +34,8 @@ const ghosts: GhostType[] = [
             Evidence.EMF5,
             Evidence.GhostOrbs,
         ],
-    },
-    {
+    }),
+    new Ghost({
         name: "Poltergeist",
         description: "",
         strength: "",
@@ -45,8 +45,8 @@ const ghosts: GhostType[] = [
             Evidence.Fingerprints,
             Evidence.GhostOrbs,
         ],
-    },
-    {
+    }),
+    new Ghost({
         name: "Banshee",
         description: "",
         strength: "",
@@ -56,8 +56,8 @@ const ghosts: GhostType[] = [
             Evidence.EMF5,
             Evidence.Freezing,
         ],
-    },
-    {
+    }),
+    new Ghost({
         name: "Jinn",
         description: "",
         strength: "",
@@ -67,8 +67,8 @@ const ghosts: GhostType[] = [
             Evidence.SpiritBox,
             Evidence.GhostOrbs,
         ],
-    },
-    {
+    }),
+    new Ghost({
         name: "Mare",
         description: "",
         strength: "",
@@ -78,8 +78,8 @@ const ghosts: GhostType[] = [
             Evidence.SpiritBox,
             Evidence.Freezing,
         ],
-    },
-    {
+    }),
+    new Ghost({
         name: "Revenant",
         description: "",
         strength: "",
@@ -89,8 +89,8 @@ const ghosts: GhostType[] = [
             Evidence.GhostWriting,
             Evidence.EMF5,
         ],
-    },
-    {
+    }),
+    new Ghost({
         name: "Shade",
         description: "",
         strength: "",
@@ -100,8 +100,8 @@ const ghosts: GhostType[] = [
             Evidence.EMF5,
             Evidence.GhostOrbs,
         ],
-    },
-    {
+    }),
+    new Ghost({
         name: "Demon",
         description: "",
         strength: "",
@@ -111,8 +111,8 @@ const ghosts: GhostType[] = [
             Evidence.GhostWriting,
             Evidence.Freezing,
         ],
-    },
-    {
+    }),
+    new Ghost({
         name: "Yurei",
         description: "",
         strength: "",
@@ -122,8 +122,8 @@ const ghosts: GhostType[] = [
             Evidence.Freezing,
             Evidence.GhostOrbs,
         ],
-    },
-    {
+    }),
+    new Ghost({
         name: "Oni",
         description: "",
         strength: "",
@@ -133,7 +133,7 @@ const ghosts: GhostType[] = [
             Evidence.GhostWriting,
             Evidence.EMF5,
         ],
-    },
+    }),
 ]
 
 export default ghosts

@@ -1,11 +1,12 @@
 import type Evidence from './Evidence'
+import type EvidenceCollection from './EvidenceCollection'
 
 interface GhostType {
-    name: String,
-    description: String,
-    strength: String,
-    weakness: String,
-    evidence: Evidence[]
+    readonly name: String,
+    readonly description: String,
+    readonly strength: String,
+    readonly weakness: String,
+    readonly evidence: Evidence[]
 }
 
 export default GhostType

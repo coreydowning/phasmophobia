@@ -1,9 +1,7 @@
 <script lang="ts">
 	import GhostCard from "../components/GhostCard.svelte";
-	import Evidence from "../models/Evidence";
 	import EvidenceCollection from "../models/EvidenceCollection";
 	import ghosts from "../models/ghosts";
-	import Button, { Group, Label, Icon } from "@smui/button";
 	import Fab, { Icon as FabIcon } from "@smui/fab";
 	import EvidenceSelector from "../components/EvidenceSelector.svelte";
 
