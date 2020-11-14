@@ -5,9 +5,23 @@
 	import ghosts from "../models/ghosts";
 	import Button, { Group, Label, Icon } from "@smui/button";
 	import Fab, { Icon as FabIcon } from "@smui/fab";
+	import EvidenceSelector from "../components/EvidenceSelector.svelte";
 
 	let confirmed = new EvidenceCollection();
 	let eliminated = new EvidenceCollection();
+
+	const confirm = (event) => {
+		const evidence = event.detail.evidence;
+		window.sa_event(`click_button_confirm_${evidence}`);
+		confirmed = confirmed.toggle(evidence);
+		eliminated = eliminated.remove(evidence);
+	};
+	const eliminate = (event) => {
+		const evidence = event.detail.evidence;
+		window.sa_event(`click_button_eliminate_${evidence}`);
+		eliminated = eliminated.toggle(evidence);
+		confirmed = confirmed.remove(evidence);
+	};
 
 	const handleSelection = (evidence) => {
 		window.sa_event(`click_card_chip_${evidence}`);
@@ -17,10 +31,6 @@
 </script>
 
 <style lang="scss">
-	.button {
-		padding: 0.5rem;
-		display: inline-block;
-	}
 	.fab {
 		position: fixed;
 		bottom: 3rem;
@@ -63,32 +73,11 @@
 
 <section>
 	<h4>Evidence</h4>
-	{#each Object.values(Evidence) as evidence (evidence)}
-		<div class="button">
-			<Group>
-				<Button
-					on:click={() => {
-						window.sa_event(`click_button_confirm_${evidence}`);
-						confirmed = confirmed.toggle(evidence);
-						eliminated = eliminated.remove(evidence);
-					}}
-					color="primary"
-					variant={confirmed.has(evidence) ? 'unelevated' : 'outlined'}>
-					<Label>{evidence}</Label>
-				</Button>
-				<Button
-					on:click={() => {
-						window.sa_event(`click_button_eliminate_${evidence}`);
-						eliminated = eliminated.toggle(evidence);
-						confirmed = confirmed.remove(evidence);
-					}}
-					color="primary"
-					variant={eliminated.has(evidence) ? 'unelevated' : 'outlined'}>
-					<Icon class="material-icons">highlight_off</Icon>
-				</Button>
-			</Group>
-		</div>
-	{/each}
+	<EvidenceSelector
+		on:confirm={confirm}
+		on:eliminate={eliminate}
+		{confirmed}
+		{eliminated} />
 </section>
 
 <main>
